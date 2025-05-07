@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}OSINT Search{% endblock %}
+
+{% block content %}
+<div class="tool-container">
+    <h2>OSINT Search Tool</h2>
+    <p class="tool-description">Search for publicly available information about domains, IP addresses, usernames, emails, and more.</p>
+    
+    <form method="POST" action="{{ url_for('osint') }}">
+        <div class="input-group">
+            <label for="search_term">Search Term:</label>
+            <input type="text" id="search_term" name="search_term" required placeholder="Domain, IP, username, email, etc.">
+        </div>
+        
+        <div class="input-group">
+            <label for="search_type">Search Type:</label>
+            <select id="search_type" name="search_type">
+                <option value="domain">Domain</option>
+                <option value="ip">IP Address</option>
+                <option value="email">Email</option>
+                <option value="general">General</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn-submit">Search</button>
+    </form>
+    
+    {% if results %}
+    <div class="results-container">
+        <h3>Search Results</h3>
+
+        {% if 'error' in results %}
+            <div class="error-container">
+                <p class="error-message">{{ results.error }}</p>
+            </div>
+        {% elif search_type == "domain" %}
+            <div class="result-section">
+                <h4>Domain Information</h4>
+                <table class="result-table">
+                    <tr>
+                        <th>Domain</th>
+                        <td>{{ results.domain }}</td>
+                    </tr>
+                    <tr>
+                        <th>IP Address</th>
+                        <td>{{ results.ip }}</td>
+                    </tr>
+                    <tr>
+                        <th>Registrar</th>
+                        <td>{{ results.whois.registrar | default('Unknown', true) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Creation Date</th>
+                        <td>{{ results.whois.creation_date | default('Unknown', true) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Expiration Date</th>
+                        <td>{{ results.whois.expiration_date | default('Unknown', true) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name Servers</th>
+                        <td>{{ results.whois.name_servers | default([], true) | join(', ') }}</td>
+                    </tr>
+                </table>
+            </div>
+
+        {% elif search_type == "ip" %}
+            <div class="result-section">
+                <h4>IP Information</h4>
+                <table class="result-table">
+                    <tr>
+                        <th>IP Address</th>
+                        <td>{{ results.ip }}</td>
+                    </tr>
+                    <tr>
+                        <th>Reverse DNS</th>
+                        <td>{{ results.reverse_dns }}</td>
+                    </tr>
+                    <tr>
+                        <th>Geolocation</th>
+                        <td>{{ results.geolocation | default('No geolocation data available', true) }}</td>
+                    </tr>
+                </table>
+            </div>
+
+        {% elif search_type == "email" %}
+            <div class="result-section">
+                <h4>Email Information</h4>
+                <table class="result-table">
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ results.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Domain</th>
+                        <td>{{ results.domain }}</td>
+                    </tr>
+                    <tr>
+                        <th>Domain Info</th>
+                        <td>
+                            {% if results.domain_info %}
+                                <p>IP: {{ results.domain_info.ip }}</p>
+                                <p>Registrar: {{ results.domain_info.whois.registrar | default('Unknown', true) }}</p>
+                            {% else %}
+                                No domain info available
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Possible Services</th>
+                        <td>
+                            <ul>
+                            {% for service in results.possible_services %}
+                                <li>{{ service }}</li>
+                            {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        {% else %}
+            <div class="result-section">
+                <h4>General Search Results</h4>
+                <table class="result-table">
+                    <tr>
+                        <th>Query</th>
+                        <td>{{ results.query }}</td>
+                    </tr>
+                    <tr>
+                        <th>Note</th>
+                        <td>{{ results.note }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endif %}
+
+        {% if results.additional_resources %}
+        <div class="result-section">
+            <h4>Recommended Resources</h4>
+            <ul class="resources-list">
+                {% for resource in results.additional_resources %}
+                    <li>{{ resource }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if results.suggestions %}
+        <div class="result-section">
+            <h4>Suggestions</h4>
+            <ul class="resources-list">
+                {% for suggestion in results.suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

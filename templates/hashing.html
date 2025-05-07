@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Hashing Tools - Cybersecurity Toolkit{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <h2><i class="fas fa-hashtag"></i> Hashing Tools</h2>
+    <p class="tool-description">Generate cryptographic hashes for text or files, including MD5, SHA-1, SHA-256, and SHA-512.</p>
+
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="text-hash">Text Hashing</button>
+            <button class="tab-btn" data-tab="file-hash">File Hashing</button>
+        </div>
+        
+        <div class="tab-content">
+            <div class="tab-pane active" id="text-hash">
+                <div class="tool-form">
+                    <form method="POST" action="{{ url_for('hashing') }}">
+                        <div class="form-group">
+                            <label for="text">Enter Text to Hash:</label>
+                            <textarea id="text" name="text" rows="5" placeholder="Enter the text you want to hash..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary"><i class="fas fa-hashtag"></i> Generate Hashes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="tab-pane" id="file-hash">
+                <div class="tool-form">
+                    <form method="POST" action="{{ url_for('hashing') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file">Select File to Hash:</label>
+                            <div class="file-upload">
+                                <input type="file" id="file" name="file" required>
+                                <label for="file" class="file-label"><i class="fas fa-upload"></i> Choose File</label>
+                                <span class="file-name">No file selected</span>
+                            </div>
+                            <small>Any file type supported (Max size: 16MB)</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary"><i class="fas fa-hashtag"></i> Generate Hashes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if result %}
+    <div class="results-container">
+        <h3>Hash Results</h3>
+        
+        {% if result.error %}
+        <div class="error-message">
+            <p>{{ result.error }}</p>
+        </div>
+        {% else %}
+        <div class="result-details">
+            {% if result.input_text %}
+            <div class="result-section">
+                <h4>Input Text</h4>
+                <div class="detail-content">
+                    <div class="input-display">{{ result.input_text }}</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if result.filename %}
+            <div class="result-section">
+                <h4>Source File</h4>
+                <div class="detail-content">
+                    <p>{{ result.filename }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="result-section">
+                <h4>Hash Values</h4>
+                <div class="detail-content">
+                    <table class="data-table">
+                        <tr>
+                            <th>MD5</th>
+                            <td class="hash-value">
+                                <div class="hash-container">
+                                    <span>{{ result.md5 }}</span>
+                                    <button class="copy-btn" data-value="{{ result.md5 }}"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>SHA-1</th>
+                            <td class="hash-value">
+                                <div class="hash-container">
+                                    <span>{{ result.sha1 }}</span>
+                                    <button class="copy-btn" data-value="{{ result.sha1 }}"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>SHA-256</th>
+                            <td class="hash-value">
+                                <div class="hash-container">
+                                    <span>{{ result.sha256 }}</span>
+                                    <button class="copy-btn" data-value="{{ result.sha256 }}"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>SHA-512</th>
+                            <td class="hash-value">
+                                <div class="hash-container">
+                                    <span>{{ result.sha512 }}</span>
+                                    <button class="copy-btn" data-value="{{ result.sha512 }}"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% if result.base64 %}
+                        <tr>
+                            <th>Base64</th>
+                            <td class="hash-value">
+                                <div class="hash-container">
+                                    <span>{{ result.base64 }}</span>
+                                    <button class="copy-btn" data-value="{{ result.base64 }}"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="tool-info">
+        <h3>About This Tool</h3>
+        <p>Cryptographic hashing creates a fixed-size string (hash) that uniquely represents the original data. Hashes are useful for:</p>
+        <ul>
+            <li>Verifying file integrity and authenticity</li>
+            <li>Checking if data has been modified</li>
+            <li>Securely storing passwords (with proper salting)</li>
+            <li>Digital signatures and forensic analysis</li>
+        </ul>
+        <p><strong>Note:</strong> Different hash algorithms have different security properties. SHA-256 and SHA-512 are generally recommended for security-critical applications.</p>
+    </div>
+</section>
+
+{% block scripts %}
+<script>
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons and panes
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            this.classList.add('active');
+            document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+        });
+    });
+    
+    // Display selected filename
+    const fileInput = document.getElementById('file');
+    const fileNameDisplay = document.querySelector('.file-name');
+    
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                fileNameDisplay.textContent = this.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'No file selected';
+            }
+        });
+    }
+    
+    // Copy to clipboard functionality
+    const copyBtns = document.querySelectorAll('.copy-btn');
+    
+    copyBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            navigator.clipboard.writeText(value).then(() => {
+                const originalIcon = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    this.innerHTML = originalIcon;
+                }, 1500);
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

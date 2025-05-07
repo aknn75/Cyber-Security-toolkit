@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Network Utilities{% endblock %}
+
+{% block content %}
+<div class="tool-container">
+    <h2>Network Utilities</h2>
+    <p class="tool-description">Basic network tools to help with diagnostics and reconnaissance.</p>
+    
+    <div class="tool-selector">
+        <button class="tool-tab active" data-tool="ping">Ping</button>
+        <button class="tool-tab" data-tool="traceroute">Traceroute</button>
+        <button class="tool-tab" data-tool="port-scan">Port Scan</button>
+        <button class="tool-tab" data-tool="dns-lookup">DNS Lookup</button>
+    </div>
+    
+    <div class="tool-content" id="ping-tool">
+        <h3>Ping</h3>
+        <p>Send ICMP echo request packets to network hosts.</p>
+        <form method="POST" action="{{ url_for('network_ping') }}">
+            <div class="input-group">
+                <label for="ping-host">Host:</label>
+                <input type="text" id="ping-host" name="host" required placeholder="example.com or IP address">
+            </div>
+            <div class="input-group">
+                <label for="ping-count">Number of Packets:</label>
+                <input type="number" id="ping-count" name="count" min="1" max="10" value="4">
+            </div>
+            <button type="submit" class="btn-submit">Run Ping</button>
+        </form>
+    </div>
+    
+    <div class="tool-content hidden" id="traceroute-tool">
+        <h3>Traceroute</h3>
+        <p>Display the route and measure transit delays of packets across a network.</p>
+        <form method="POST" action="{{ url_for('network_traceroute') }}">
+            <div class="input-group">
+                <label for="traceroute-host">Host:</label>
+                <input type="text" id="traceroute-host" name="host" required placeholder="example.com or IP address">
+            </div>
+            <div class="input-group">
+                <label for="traceroute-max-hops">Max Hops:</label>
+                <input type="number" id="traceroute-max-hops" name="max_hops" min="1" max="30" value="15">
+            </div>
+            <button type="submit" class="btn-submit">Run Traceroute</button>
+        </form>
+    </div>
+    
+    <div class="tool-content hidden" id="port-scan-tool">
+        <h3>Port Scan</h3>
+        <p>Scan a host for open ports.</p>
+        <form method="POST" action="{{ url_for('network_port_scan') }}">
+            <div class="input-group">
+                <label for="portscan-host">Host:</label>
+                <input type="text" id="portscan-host" name="host" required placeholder="example.com or IP address">
+            </div>
+            <div class="input-group">
+                <label for="port-range">Port Range:</label>
+                <select id="port-range" name="port_range">
+                    <option value="common">Common Ports</option>
+                    <option value="1-1024">Well-known Ports (1-1024)</option>
+                    <option value="1-65535">All Ports (1-65535)</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            <div class="input-group hidden" id="custom-port-range">
+                <label for="custom-ports">Custom Ports:</label>
+                <input type="text" id="custom-ports" name="custom_ports" placeholder="e.g., 22,80,443,8080 or 1000-2000">
+            </div>
+            <button type="submit" class="btn-submit">Run Port Scan</button>
+        </form>
+    </div>
+    
+    <div class="tool-content hidden" id="dns-lookup-tool">
+        <h3>DNS Lookup</h3>
+        <p>Look up DNS records for a domain.</p>
+        <form method="POST" action="{{ url_for('network_dns_lookup') }}">
+            <div class="input-group">
+                <label for="dns-domain">Domain:</label>
+                <input type="text" id="dns-domain" name="domain" required placeholder="example.com">
+            </div>
+            <div class="input-group">
+                <label for="record-types">Record Types:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="record_types" value="A" checked> A</label>
+                    <label><input type="checkbox" name="record_types" value="AAAA"> AAAA</label>
+                    <label><input type="checkbox" name="record_types" value="MX"> MX</label>
+                    <label><input type="checkbox" name="record_types" value="NS"> NS</label>
+                    <label><input type="checkbox" name="record_types" value="TXT"> TXT</label>
+                    <label><input type="checkbox" name="record_types" value="CNAME"> CNAME</label>
+                    <label><input type="checkbox" name="record_types" value="SOA"> SOA</label>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Run DNS Lookup</button>
+        </form>
+    </div>
+    
+    {% if results %}
+    <div class="results-container">
+        <h3>Results</h3>
+        <div class="result-info">
+            {% if target %}
+            <p><strong>Target:</strong> {{ target }}</p>
+            {% endif %}
+            {% if domain %}
+            <p><strong>Domain:</strong> {{ domain }}</p>
+            {% endif %}
+        </div>
+        
+        <pre class="result-output">{{ results }}</pre>
+        
+        {% if result_type == "port_scan" and open_ports %}
+        <div class="port-scan-results">
+            <h4>Open Ports</h4>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Port</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for port in open_ports %}
+                    <tr>
+                        <td>{{ port.number }}</td>
+                        <td>{{ port.service }}</td>
+                        <td>{{ port.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        
+        {% if result_type == "dns_lookup" and dns_records %}
+        <div class="dns-lookup-results">
+            {% for record_type, records in dns_records.items() %}
+            <div class="record-section">
+                <h4>{{ record_type }} Records</h4>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Record</th>
+                            <th>Value</th>
+                            <th>TTL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td>{{ record.name }}</td>
+                            <td>{{ record.value }}</td>
+                            <td>{{ record.ttl }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if error %}
+    <div class="error-container">
+        <p class="error-message">{{ error }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tool tab switching
+        const toolTabs = document.querySelectorAll('.tool-tab');
+        const toolContents = document.querySelectorAll('.tool-content');
+        
+        toolTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                toolTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tool contents
+                toolContents.forEach(content => content.classList.add('hidden'));
+                // Show selected tool content
+                const toolId = this.getAttribute('data-tool');
+                document.getElementById(toolId + '-tool').classList.remove('hidden');
+            });
+        });
+        
+        // Custom port range toggle
+        const portRangeSelect = document.getElementById('port-range');
+        const customPortRange = document.getElementById('custom-port-range');
+        
+        if (portRangeSelect && customPortRange) {
+            portRangeSelect.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customPortRange.classList.remove('hidden');
+                } else {
+                    customPortRange.classList.add('hidden');
+                }
+            });
+        }
+        
+        // For DNS lookup, ensure at least one checkbox is checked
+        const recordCheckboxes = document.querySelectorAll('input[name="record_types"]');
+        const dnsForm = document.querySelector('#dns-lookup-tool form');
+        
+        if (dnsForm && recordCheckboxes.length > 0) {
+            dnsForm.addEventListener('submit', function(e) {
+                const checked = document.querySelectorAll('input[name="record_types"]:checked');
+                if (checked.length === 0) {
+                    e.preventDefault();
+                    alert('Please select at least one record type');
+                }
+            });
+        }
+        
+        // If there are results, scroll to them
+        const resultsContainer = document.querySelector('.results-container');
+        if (resultsContainer) {
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Keep the correct tab active if results are shown
+        {% if result_type %}
+            const resultTypeMap = {
+                'ping': 'ping',
+                'traceroute': 'traceroute',
+                'port_scan': 'port-scan',
+                'dns_lookup': 'dns-lookup'
+            };
+            
+            const activeTab = resultTypeMap['{{ result_type }}'];
+            if (activeTab) {
+                // Click the tab to activate it
+                document.querySelector(`.tool-tab[data-tool="${activeTab}"]`).click();
+            }
+        {% endif %}
+    });
+</script>
+{% endblock %}

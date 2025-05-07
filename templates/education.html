@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}Educational Resources{% endblock %}
+
+{% block content %}
+<div class="education-container">
+    <h2>Cybersecurity Educational Resources</h2>
+    <p class="education-intro">Explore these resources to enhance your cybersecurity knowledge and skills. These materials are designed for beginners to advanced learners.</p>
+    
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="fundamentals">Fundamentals</button>
+        <button class="category-tab" data-category="threats">Threats & Vulnerabilities</button>
+        <button class="category-tab" data-category="tools">Tools & Techniques</button>
+        <button class="category-tab" data-category="certifications">Certifications</button>
+        <button class="category-tab" data-category="careers">Career Paths</button>
+    </div>
+    
+    <div class="category-content" id="fundamentals-content">
+        <h3>Cybersecurity Fundamentals</h3>
+        
+        <div class="resource-card">
+            <h4>Core Security Principles</h4>
+            <p>Understanding the CIA triad (Confidentiality, Integrity, and Availability) is fundamental to cybersecurity. These principles form the foundation of all security practices.</p>
+            <h5>Confidentiality</h5>
+            <p>Confidentiality ensures that information is accessible only to those authorized to have access. Techniques to maintain confidentiality include:</p>
+            <ul>
+                <li>Data encryption</li>
+                <li>Authentication mechanisms</li>
+                <li>Access control systems</li>
+                <li>Information classification</li>
+            </ul>
+            
+            <h5>Integrity</h5>
+            <p>Integrity ensures that data is accurate and reliable and has not been modified by unauthorized parties. Methods to maintain integrity include:</p>
+            <ul>
+                <li>Hashing</li>
+                <li>Digital signatures</li>
+                <li>Checksums</li>
+                <li>Version control</li>
+            </ul>
+            
+            <h5>Availability</h5>
+            <p>Availability ensures that systems and data are accessible to authorized users when needed. Strategies to maintain availability include:</p>
+            <ul>
+                <li>Redundancy</li>
+                <li>Fault tolerance</li>
+                <li>Disaster recovery planning</li>
+                <li>DDoS protection</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Security Models and Frameworks</h4>
+            <p>Understanding established security frameworks helps organizations implement comprehensive security programs:</p>
+            <ul>
+                <li><strong>NIST Cybersecurity Framework</strong> - Provides a policy framework of computer security guidance</li>
+                <li><strong>ISO 27001</strong> - International standard for managing information security</li>
+                <li><strong>SANS Critical Security Controls</strong> - Prioritized set of actions to protect organizations</li>
+                <li><strong>Defense in Depth</strong> - Layered security strategy to protect information assets</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Recommended Learning Resources</h4>
+            <ul class="resource-links">
+                <li><a href="https://www.cybrary.it/course/intro-cyber-security/" target="_blank">Cybrary: Introduction to Cybersecurity</a></li>
+                <li><a href="https://www.coursera.org/learn/cyber-security-basics" target="_blank">Coursera: Cybersecurity Basics</a></li>
+                <li><a href="https://www.edx.org/course/cybersecurity-fundamentals" target="_blank">edX: Cybersecurity Fundamentals</a></li>
+                <li><a href="https://www.youtube.com/c/professormesser" target="_blank">Professor Messer's Security+ Training Videos</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category-content hidden" id="threats-content">
+        <h3>Threats & Vulnerabilities</h3>
+        
+        <div class="resource-card">
+            <h4>Common Cyber Threats</h4>
+            <p>Understanding the threat landscape is essential for effective defense:</p>
+            
+            <h5>Malware</h5>
+            <p>Malicious software designed to harm systems, including:</p>
+            <ul>
+                <li><strong>Viruses</strong> - Self-replicating malicious programs that attach to legitimate files</li>
+                <li><strong>Trojans</strong> - Malware disguised as legitimate software</li>
+                <li><strong>Ransomware</strong> - Encrypts data and demands payment for decryption</li>
+                <li><strong>Spyware</strong> - Secretly monitors user activity</li>
+                <li><strong>Worms</strong> - Self-replicating malware that spreads across networks</li>
+            </ul>
+            
+            <h5>Social Engineering</h5>
+            <p>Manipulating people to divulge confidential information or perform actions:</p>
+            <ul>
+                <li><strong>Phishing</strong> - Fraudulent attempts to obtain sensitive information</li>
+                <li><strong>Pretexting</strong> - Creating a fabricated scenario to extract information</li>
+                <li><strong>Baiting</strong> - Offering something enticing to entrap the victim</li>
+                <li><strong>Quid pro quo</strong> - Offering a service in exchange for information</li>
+            </ul>
+            
+            <h5>Network-Based Attacks</h5>
+            <ul>
+                <li><strong>DDoS</strong> - Overwhelming systems with traffic</li>
+                <li><strong>Man-in-the-Middle</strong> - Intercepting communications between parties</li>
+                <li><strong>SQL Injection</strong> - Inserting malicious SQL code into queries</li>
+                <li><strong>Cross-Site Scripting (XSS)</strong> - Injecting client-side scripts into web pages</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Vulnerability Management</h4>
+            <p>Process of identifying, classifying, prioritizing, remediating, and mitigating vulnerabilities:</p>
+            <ul>
+                <li><strong>Vulnerability Scanning</strong> - Automated testing for known vulnerabilities</li>
+                <li><strong>Penetration Testing</strong> - Simulated attacks to identify vulnerabilities</li>
+                <li><strong>Patch Management</strong> - Process of distributing and applying updates</li>
+                <li><strong>Security Assessments</strong> - Evaluating security posture and controls</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Recommended Learning Resources</h4>
+            <ul class="resource-links">
+                <li><a href="https://www.sans.org/blog/" target="_blank">SANS Internet Storm Center</a></li>
+                <li><a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10</a></li>
+                <li><a href="https://attack.mitre.org/" target="_blank">MITRE ATT&CK Framework</a></li>
+                <li><a href="https://cve.mitre.org/" target="_blank">Common Vulnerabilities and Exposures (CVE)</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category-content hidden" id="tools-content">
+        <h3>Tools & Techniques</h3>
+        
+        <div class="resource-card">
+            <h4>Security Testing Tools</h4>
+            <p>Essential tools for security assessment and testing:</p>
+            
+            <h5>Network Security</h5>
+            <ul>
+                <li><strong>Wireshark</strong> - Network protocol analyzer</li>
+                <li><strong>Nmap</strong> - Network discovery and security auditing</li>
+                <li><strong>Metasploit</strong> - Penetration testing framework</li>
+                <li><strong>Snort</strong> - Network intrusion detection system</li>
+            </ul>
+            
+            <h5>Web Application Security</h5>
+            <ul>
+                <li><strong>OWASP ZAP</strong> - Web application security scanner</li>
+                <li><strong>Burp Suite</strong> - Web vulnerability scanner</li>
+                <li><strong>Nikto</strong> - Web server scanner</li>
+                <li><strong>SQLmap</strong> - Automated SQL injection tool</li>
+            </ul>
+            
+            <h5>Password Tools</h5>
+            <ul>
+                <li><strong>John the Ripper</strong> - Password cracking tool</li>
+                <li><strong>Hashcat</strong> - Advanced password recovery</li>
+                <li><strong>KeePass</strong> - Password manager</li>
+            </ul>
+            
+            <h5>Forensics</h5>
+            <ul>
+                <li><strong>Autopsy</strong> - Digital forensics platform</li>
+                <li><strong>Volatility</strong> - Memory forensics framework</li>
+                <li><strong>The Sleuth Kit</strong> - Library for disk investigation</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Security Techniques</h4>
+            <p>Methods and practices for improving security:</p>
+            
+            <h5>Encryption</h5>
+            <ul>
+                <li><strong>Symmetric Encryption</strong> - Same key for encryption and decryption</li>
+                <li><strong>Asymmetric Encryption</strong> - Public and private key pairs</li>
+                <li><strong>Hash Functions</strong> - One-way functions for data integrity</li>
+                <li><strong>TLS/SSL</strong> - Protocols for secure communications</li>
+            </ul>
+            
+            <h5>Access Control</h5>
+            <ul>
+                <li><strong>Authentication</strong> - Verifying identity</li>
+                <li><strong>Authorization</strong> - Granting or denying permissions</li>
+                <li><strong>Accounting</strong> - Tracking user activity</li>
+                <li><strong>Multi-factor Authentication</strong> - Using multiple verification methods</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Recommended Learning Resources</h4>
+            <ul class="resource-links">
+                <li><a href="https://www.hackthebox.eu/" target="_blank">HackTheBox - Hands-on Cybersecurity Training</a></li>
+                <li><a href="https://tryhackme.com/" target="_blank">TryHackMe - Learn Cybersecurity</a></li>
+                <li><a href="https://portswigger.net/web-security" target="_blank">PortSwigger Web Security Academy</a></li>
+                <li><a href="https://www.vulnhub.com/" target="_blank">VulnHub - Vulnerable VMs for Practice</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category-content hidden" id="certifications-content">
+        <h3>Cybersecurity Certifications</h3>
+        
+        <div class="resource-card">
+            <h4>Entry-Level Certifications</h4>
+            <ul>
+                <li><strong>CompTIA Security+</strong> - Foundation-level security certification</li>
+                <li><strong>GIAC Security Essentials (GSEC)</strong> - Demonstrates knowledge of security terminology and concepts</li>
+                <li><strong>Certified Information Systems Security Professional (CISSP) Associate</strong> - For those who don't have required experience for full CISSP</li>
+                <li><strong>Cisco Certified CyberOps Associate</strong> - Security operations center (SOC) skills</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Intermediate Certifications</h4>
+            <ul>
+                <li><strong>Certified Ethical Hacker (CEH)</strong> - Penetration testing methodology</li>
+                <li><strong>CompTIA CySA+</strong> - Cybersecurity analyst certification</li>
+                <li><strong>GIAC Certified Incident Handler (GCIH)</strong> - Incident handling and response skills</li>
+                <li><strong>Certified Information Security Manager (CISM)</strong> - Management-focused security certification</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Advanced Certifications</h4>
+            <ul>
+                <li><strong>Certified Information Systems Security Professional (CISSP)</strong> - Advanced security management certification</li>
+                <li><strong>Offensive Security Certified Professional (OSCP)</strong> - Hands-on penetration testing certification</li>
+                <li><strong>Certified Information Systems Auditor (CISA)</strong> - IT auditing certification</li>
+                <li><strong>GIAC Security Expert (GSE)</strong> - Elite security certification</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Specialized Certifications</h4>
+            <ul>
+                <li><strong>Certified Cloud Security Professional (CCSP)</strong> - Cloud security expertise</li>
+                <li><strong>GIAC Certified Forensic Examiner (GCFE)</strong> - Computer forensics certification</li>
+                <li><strong>Certified Secure Software Lifecycle Professional (CSSLP)</strong> - Secure software development</li>
+                <li><strong>Healthcare Information Security and Privacy Practitioner (HCISPP)</strong> - Healthcare security</li>
+                <li><strong>Certified Authorization Professional (CAP)</strong> - Risk management framework</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Certification Resources</h4>
+            <ul class="resource-links">
+                <li><a href="https://www.comptia.org/certifications" target="_blank">CompTIA Certifications</a></li>
+                <li><a href="https://www.isc2.org/Certifications" target="_blank">(ISC)² Certifications</a></li>
+                <li><a href="https://www.giac.org/certifications" target="_blank">GIAC Certifications</a></li>
+                <li><a href="https://www.offensive-security.com/courses-and-certifications/" target="_blank">Offensive Security Certifications</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category-content hidden" id="careers-content">
+        <h3>Cybersecurity Career Paths</h3>
+        
+        <div class="resource-card">
+            <h4>Entry-Level Positions</h4>
+            <ul>
+                <li><strong>Security Analyst</strong> - Monitors security systems and investigates security breaches</li>
+                <li><strong>SOC Analyst</strong> - Monitors and analyzes security alerts in a Security Operations Center</li>
+                <li><strong>IT Auditor</strong> - Reviews and assesses the organization's IT infrastructure</li>
+                <li><strong>Security Administrator</strong> - Manages security solutions and enforces policies</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Mid-Level Positions</h4>
+            <ul>
+                <li><strong>Penetration Tester</strong> - Simulates attacks to identify vulnerabilities</li>
+                <li><strong>Security Engineer</strong> - Designs and implements security solutions</li>
+                <li><strong>Incident Responder</strong> - Handles and mitigates security incidents</li>
+                <li><strong>Forensics Investigator</strong> - Analyzes digital evidence for investigations</li>
+                <li><strong>Threat Intelligence Analyst</strong> - Researches and analyzes cyber threats</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Senior Positions</h4>
+            <ul>
+                <li><strong>Chief Information Security Officer (CISO)</strong> - Executive responsible for information security</li>
+                <li><strong>Security Architect</strong> - Designs comprehensive security structures</li>
+                <li><strong>Security Consultant</strong> - Provides expert advice on security matters</li>
+                <li><strong>Security Director</strong> - Manages security operations and teams</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Specialized Roles</h4>
+            <ul>
+                <li><strong>Application Security Specialist</strong> - Focuses on securing applications</li>
+                <li><strong>Cloud Security Engineer</strong> - Specializes in cloud infrastructure security</li>
+                <li><strong>IoT Security Specialist</strong> - Focuses on Internet of Things security</li>
+                <li><strong>Secure DevOps Engineer</strong> - Integrates security into the DevOps process</li>
+            </ul>
+        </div>
+        
+        <div class="resource-card">
+            <h4>Career Resources</h4>
+            <ul class="resource-links">
+                <li><a href="https://www.cyberseek.org/pathway.html" target="_blank">CyberSeek Career Pathway</a></li>
+                <li><a href="https://www.sans.org/cybersecurity-careers/" target="_blank">SANS Cybersecurity Career Resources</a></li>
+                <li><a href="https://www.isc2.org/resources/career-resources" target="_blank">(ISC)² Career Resources</a></li>
+                <li><a href="https://www.cyberdegrees.org/" target="_blank">Cyber Degrees - Education & Career Resources</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Category tab switching
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const categoryContents = document.querySelectorAll('.category-content');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all category contents
+                categoryContents.forEach(content => content.classList.add('hidden'));
+                // Show selected category content
+                const categoryId = this.getAttribute('data-category');
+                document.getElementById(categoryId + '-content').classList.remove('hidden');
+            });
+        });
+    });
+</script>
+{% endblock %}

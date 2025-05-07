@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}URL Scanner - Cybersecurity Toolkit{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <h2><i class="fas fa-globe"></i> URL/Domain Scanner</h2>
+    <p class="tool-description">Scan a URL or domain to gather security information including WHOIS data, SSL status, IP address, and HTTP headers.</p>
+
+    <div class="tool-form">
+        <form method="POST" action="{{ url_for('url_scanner') }}">
+            <div class="form-group">
+                <label for="url">Enter URL or Domain:</label>
+                <div class="input-group">
+                    <input type="text" id="url" name="url" placeholder="example.com or https://example.com" required>
+                    <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Scan</button>
+                </div>
+                <small>Example: example.com, https://example.com</small>
+            </div>
+        </form>
+    </div>
+
+    {% if result %}
+    <div class="results-container">
+        <h3>Scan Results for: {{ result.url }}</h3>
+        
+        <div class="result-summary">
+            <div class="summary-item {% if result.ssl %}secure{% else %}insecure{% endif %}">
+                <i class="fas {% if result.ssl %}fa-lock{% else %}fa-lock-open{% endif %}"></i>
+                <span>SSL: {% if result.ssl %}Enabled{% else %}Not Enabled{% endif %}</span>
+            </div>
+            <div class="summary-item">
+                <i class="fas fa-server"></i>
+                <span>Status: {{ result.status }}</span>
+            </div>
+            <div class="summary-item">
+                <i class="fas fa-network-wired"></i>
+                <span>IP: {{ result.ip }}</span>
+            </div>
+        </div>
+        
+        {% if result.error %}
+        <div class="error-message">
+            <p>{{ result.error }}</p>
+        </div>
+        {% else %}
+        <div class="result-details">
+            <div class="result-section">
+                <h4>WHOIS Information</h4>
+                <div class="detail-content">
+                    {% if result.whois is mapping %}
+                        <table class="data-table">
+                            {% for key, value in result.whois.items() %}
+                            <tr>
+                                <th>{{ key|capitalize }}</th>
+                                <td>{{ value }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>{{ result.whois }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="result-section">
+                <h4>HTTP Headers</h4>
+                <div class="detail-content">
+                    <table class="data-table">
+                        {% for header, value in result.headers.items() %}
+                        <tr>
+                            <th>{{ header }}</th>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="tool-info">
+        <h3>About This Tool</h3>
+        <p>The URL/Domain Scanner allows you to quickly analyze websites and domains to gather security-related information. This can help you:</p>
+        <ul>
+            <li>Verify SSL/TLS implementation</li>
+            <li>Check domain registration and ownership details</li>
+            <li>Examine HTTP security headers</li>
+            <li>Identify the hosting IP address</li>
+        </ul>
+        <p><strong>Note:</strong> Always ensure you have permission to scan domains that you don't own.</p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,80 @@
+{
+    "signatures": [
+      {
+        "id": "SIG-001",
+        "name": "Generic Malware Marker",
+        "description": "Common pattern found in various malware",
+        "type": "hexpattern",
+        "pattern": "4D5A90000300000004000000FFFF"
+      },
+      {
+        "id": "SIG-002",
+        "name": "Suspicious Script Element",
+        "description": "Potentially malicious JavaScript pattern",
+        "type": "text",
+        "pattern": "eval(base64_decode"
+      },
+      {
+        "id": "SIG-003",
+        "name": "Ransomware Note Pattern",
+        "description": "Common text found in ransomware notes",
+        "type": "text",
+        "pattern": "YOUR FILES HAVE BEEN ENCRYPTED"
+      },
+      {
+        "id": "SIG-004",
+        "name": "Shell Command Execution",
+        "description": "Attempts to execute shell commands",
+        "type": "text",
+        "pattern": "shell_exec("
+      },
+      {
+        "id": "SIG-005",
+        "name": "Windows Executable Marker",
+        "description": "Windows PE file header",
+        "type": "hexpattern",
+        "pattern": "4D5A"
+      },
+      {
+        "id": "SIG-006",
+        "name": "PHP Webshell Pattern",
+        "description": "Common PHP webshell function",
+        "type": "text",
+        "pattern": "passthru($_GET["
+      },
+      {
+        "id": "SIG-007",
+        "name": "Base64 Encoded PHP",
+        "description": "Base64 encoded PHP script execution",
+        "type": "text",
+        "pattern": "<?php eval(base64_decode"
+      },
+      {
+        "id": "SIG-008",
+        "name": "Suspicious PowerShell Command",
+        "description": "PowerShell encoded command execution",
+        "type": "text",
+        "pattern": "-encodedcommand"
+      },
+      {
+        "id": "SIG-009",
+        "name": "Remote File Inclusion",
+        "description": "Attempt to include remote files",
+        "type": "text",
+        "pattern": "include($_GET["
+      },
+      {
+        "id": "SIG-010",
+        "name": "Generic Exploit Kit Pattern",
+        "description": "Pattern found in common exploit kits",
+        "type": "text",
+        "pattern": "eval(function(p,a,c,k,e,d)"
+      }
+    ],
+    
+    "meta": {
+      "version": "1.0",
+      "updated": "2023-09-01",
+      "description": "Basic signature database for educational purposes only. Not intended for production use or comprehensive malware detection."
+    }
+  }

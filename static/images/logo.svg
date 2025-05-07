@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <style>
+    .shield {
+      fill: #2c3e50;
+    }
+    .shield-inner {
+      fill: #3498db;
+    }
+    .key {
+      fill: #ecf0f1;
+    }
+    .lock {
+      fill: #e74c3c;
+    }
+    .text {
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      fill: #2c3e50;
+    }
+  </style>
+  
+  <!-- Shield Background -->
+  <path class="shield" d="M256 48L464 144v128c0 106.04-85.96 192-192 192h-32c-106.04 0-192-85.96-192-192V144L256 48z"/>
+  
+  <!-- Shield Inner -->
+  <path class="shield-inner" d="M256 80L432 160v112c0 88.37-71.63 160-160 160h-32c-88.37 0-160-71.63-160-160V160L256 80z"/>
+  
+  <!-- Lock -->
+  <rect class="lock" x="216" y="200" width="80" height="70" rx="8"/>
+  <rect class="lock" x="224" y="270" width="64" height="40" rx="4"/>
+  
+  <!-- Key -->
+  <path class="key" d="M256 220a30 30 0 1 0 0 60 30 30 0 0 0 0-60z M256 240a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/>
+  <rect class="key" x="254" y="250" width="4" height="40"/>
+  <rect class="key" x="258" y="275" width="10" height="4"/>
+  <rect class="key" x="258" y="283" width="10" height="4"/>
+  
+  <!-- Text -->
+  <text class="text" x="256" y="360" text-anchor="middle" font-size="40">CYBERSEC</text>
+  <text class="text" x="256" y="390" text-anchor="middle" font-size="22">TOOLKIT</text>
+</svg>

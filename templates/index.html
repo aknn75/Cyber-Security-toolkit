@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Cybersecurity Toolkit{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+    <h2>Cybersecurity Tools Dashboard</h2>
+    <p class="intro">Welcome to the Cybersecurity Toolkit - a collection of simple, clean, and easy-to-use cybersecurity tools for students and security analysts.</p>
+    
+    <div class="tools-grid">
+        <div class="tool-card">
+            <a href="{{ url_for('url_scanner') }}">
+                <i class="fas fa-globe"></i>
+                <h3>URL/Domain Scanner</h3>
+                <p>Check security information about websites or domains including WHOIS, SSL status, and headers.</p>
+            </a>
+        </div>
+        
+        <div class="tool-card">
+            <a href="{{ url_for('malware_scanner') }}">
+                <i class="fas fa-bug"></i>
+                <h3>Malware File Analysis</h3>
+                <p>Upload files and scan them for malware signatures and suspicious patterns.</p>
+            </a>
+        </div>
+        
+        <div class="tool-card">
+            <a href="{{ url_for('hashing') }}">
+                <i class="fas fa-hashtag"></i>
+                <h3>Hashing Tools</h3>
+                <p>Generate common cryptographic hashes (MD5, SHA-1, SHA-256, SHA-512) for text or files.</p>
+            </a>
+        </div>
+        
+        <div class="tool-card">
+            <a href="{{ url_for('osint') }}">
+                <i class="fas fa-search"></i>
+                <h3>OSINT Search</h3>
+                <p>Perform open-source intelligence queries on domains, IPs, and email addresses.</p>
+            </a>
+        </div>
+        
+        <div class="tool-card">
+            <a href="{{ url_for('network_utilities') }}">
+                <i class="fas fa-network-wired"></i>
+                <h3>Network Utilities</h3>
+                <p>Basic network tools like ping, traceroute, and port scanning.</p>
+            </a>
+        </div>
+        
+        <div class="tool-card">
+            <a href="{{ url_for('education') }}">
+                <i class="fas fa-book"></i>
+                <h3>Educational Resources</h3>
+                <p>Learn about cybersecurity concepts, best practices, and explore study materials.</p>
+            </a>
+        </div>
+    </div>
+    
+    <div class="disclaimer">
+        <h3><i class="fas fa-exclamation-triangle"></i> Educational Purposes Only</h3>
+        <p>This toolkit is designed for educational purposes and security research. Always ensure you have proper authorization before scanning or analyzing systems that you do not own. Use responsibly and ethically.</p>
+    </div>
+</section>
+{% endblock %}
